@@ -6,7 +6,7 @@
 /*   By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 11:31:53 by amarzana          #+#    #+#             */
-/*   Updated: 2022/08/06 13:12:17 by amarzana         ###   ########.fr       */
+/*   Updated: 2022/08/08 16:45:39 by amarzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,46 @@ int	ft_count_lines(int fd)
 	close (fd);
 }
 
+static void	ft_init_control(t_control *control)
+{
+	control->map = NULL;
+	control->aux = 0;
+	control->error = 0;
+	control->fd = 0;
+	control->height = 0;
+	control->width = 0;
+
+}
+
 int	main(int argc, char **argv)
 {
-	int		fd;
-	int		line_nb;
-	char	**map;
-	int		i;
+	t_control	control;
 
-	i = 0;
+	ft_init_control(&control);
 	if (argc > 1)
 	{
-		fd = open(argv[1], O_RDONLY);
-		if (fd < 0)
+		control.fd = open(argv[1], O_RDONLY);
+		if (control.fd < 0)
 		{
-			close(fd);
+			close(control.fd);
 			ft_putstr_fd("Error\n Invalid or missing input file\n", 2);
 			exit(0);
 		}
-		line_nb = ft_count_lines(fd);
-		fd = open(argv[1], O_RDONLY);
-		map = (char **)malloc(sizeof(char *) * line_nb);
-		while (line_nb--)
-			map[i++] = get_next_line(fd);
-		i = -1;
-		while (map[++i])
-			printf("%s", map[i]);
-		close(fd);
+		control.height = ft_count_lines(control.fd);
+		control.fd = open(argv[1], O_RDONLY);
+		control.map = (char **)malloc(sizeof(char *) * control.height);
+		control.aux = control.height;
+		control.i = 0;
+		while (control.aux--)
+			control.map[control.i++] = get_next_line(control.fd);
+		control.error = 0;
+		ft_checks(&control);
+		printf("Error -> %d\n", control.error);
+		printf("Height -> %d\n", control.height);
+		printf("Width -> %d\n", control.width);
+		control.i = -1;
+		while (control.map[++control.i])
+			printf("%s", control.map[control.i]);
+		close(control.fd);
 	}
 }

@@ -6,7 +6,7 @@
 #    By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:17:29 by amarzana          #+#    #+#              #
-#    Updated: 2022/08/06 12:11:04 by amarzana         ###   ########.fr        #
+#    Updated: 2022/08/08 16:28:06 by amarzana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ RED 	= "\\x1b[31m"
 RESET 	= "\\x1b[37m"
 
 SRC = 	so_long.c						\
+		ft_checks.c						\
 		$(LIB_GNL)/get_next_line.c		\
 		$(LIB_GNL)/get_next_line_utils.c
 
