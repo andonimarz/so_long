@@ -6,7 +6,7 @@
 /*   By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 11:31:53 by amarzana          #+#    #+#             */
-/*   Updated: 2022/08/09 18:40:48 by amarzana         ###   ########.fr       */
+/*   Updated: 2022/08/09 19:14:50 by amarzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,23 @@ static char	*ft_get_map(t_control *control)
 	int		first;
 	char	*buf;
 	char	*str;
+	char	*aux;
 
 	first = 0;
 	len = 1;
 	buf = ft_calloc(1, sizeof(char *));
-	if (!buf)
-		return (0);
 	while (len > 0)
 	{
 		len = read(control->fd, buf, 1);
 		if (first && len)
-			str = ft_strjoin(str, buf);
+		{
+			aux = ft_strjoin(str, buf);
+			free(str);
+			str = ft_strdup(aux);
+			free (aux);
+		}
 		else if (first++ == 0)
-			ft_strlcpy(str, buf, 2);
+			str = ft_strdup(buf);
 	}
 	free (buf);
 	close (control->fd);

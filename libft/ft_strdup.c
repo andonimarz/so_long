@@ -6,7 +6,7 @@
 /*   By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:45:34 by amarzana          #+#    #+#             */
-/*   Updated: 2022/04/16 11:34:55 by amarzana         ###   ########.fr       */
+/*   Updated: 2022/08/09 19:05:11 by amarzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*ft_strdup(const char *s1)
 	size_t	i;
 
 	i = 0;
+	if (!s1)
+		return (NULL);
 	while (s1[i])
 		i++;
 	ptr = (char *)malloc((sizeof(char) * i) + 1);

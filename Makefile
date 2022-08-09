@@ -6,13 +6,13 @@
 #    By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:17:29 by amarzana          #+#    #+#              #
-#    Updated: 2022/08/09 13:49:37 by amarzana         ###   ########.fr        #
+#    Updated: 2022/08/09 19:10:07 by amarzana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 OBJ = $(SRC:.c=.o)
 SRC_DIR = src
 LIB_FT = libft
