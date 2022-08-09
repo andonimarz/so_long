@@ -6,7 +6,7 @@
 /*   By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 11:28:25 by amarzana          #+#    #+#             */
-/*   Updated: 2022/08/09 18:51:54 by amarzana         ###   ########.fr       */
+/*   Updated: 2022/08/09 19:37:50 by amarzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,9 @@ typedef struct s_control
 /*	ft_checks.c	*/
 void	ft_checks(t_control *control);
 
+/*	utils.c	*/
 void	ft_free(char **ptr);
+void	ft_init_control(t_control *control);
+int		ft_count_lines(t_control *control);
 
 #endif

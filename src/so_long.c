@@ -6,45 +6,13 @@
 /*   By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 11:31:53 by amarzana          #+#    #+#             */
-/*   Updated: 2022/08/09 19:14:50 by amarzana         ###   ########.fr       */
+/*   Updated: 2022/08/09 19:39:14 by amarzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 #include <unistd.h>
 #include <fcntl.h>
-
-int	ft_count_lines(t_control *control)
-{
-	int	i;
-
-	i = 0;
-	while (control->map[i])
-		i++;
-	return (i);
-}
-
-static void	ft_init_control(t_control *control)
-{
-	control->map = NULL;
-	control->str = NULL;
-	control->aux = 0;
-	control->error = 0;
-	control->fd = 0;
-	control->height = 0;
-	control->width = 0;
-	control->i = 0;
-}
-
-void	ft_free(char **ptr)
-{
-	int	i;
-
-	i = 0;
-	while (ptr[i])
-		free(ptr[i++]);
-	free(ptr);
-}
 
 static char	*ft_get_map(t_control *control)
 {
@@ -94,12 +62,12 @@ int	main(int argc, char **argv)
 		free (control.str);
 		control.height = ft_count_lines(&control);
 		ft_checks(&control);
-		control.i = -1;
+/* 		control.i = -1;
 		while (control.map[++control.i])
 			printf("%s\n", control.map[control.i]);
 		printf("Error -> %d\n", control.error);
 		printf("Height -> %d\n", control.height);
-		printf("Width -> %d\n", control.width);
+		printf("Width -> %d\n", control.width); */
 		ft_free(control.map);
 	}
 }
