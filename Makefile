@@ -6,7 +6,7 @@
 #    By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 13:17:29 by amarzana          #+#    #+#              #
-#    Updated: 2022/08/08 16:28:06 by amarzana         ###   ########.fr        #
+#    Updated: 2022/08/09 13:49:37 by amarzana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = so_long
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -g3
 OBJ = $(SRC:.c=.o)
+SRC_DIR = src
 LIB_FT = libft
 LIB_GNL = gnl
 LIB_MINILIBX = minilibx
@@ -22,30 +23,31 @@ GREEN 	= "\\x1b[32m"
 RED 	= "\\x1b[31m"
 RESET 	= "\\x1b[37m"
 
-SRC = 	so_long.c						\
-		ft_checks.c						\
-		$(LIB_GNL)/get_next_line.c		\
+SRC = 	$(SRC_DIR)/so_long.c						\
+		$(SRC_DIR)/ft_checks.c						\
+		$(LIB_GNL)/get_next_line.c					\
 		$(LIB_GNL)/get_next_line_utils.c
 
+.SILENT:
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@echo $(GREEN)Compiling libft$(RESET)
-	@make bonus -C $(LIB_FT)
-	@echo $(GREEN)Compiling so_long$(RESET)
-	@${CC} ${CFLAGS} $(OBJ) $(LIB_FT)/libft.a -o $(NAME)
-	@echo $(GREEN)Mandatory: Compilation done!$(RESET)
+	echo $(GREEN)Compiling libft$(RESET)
+	make bonus -C $(LIB_FT)
+	echo $(GREEN)Compiling so_long$(RESET)
+	${CC} ${CFLAGS} $(OBJ) $(LIB_FT)/libft.a -o $(NAME)
+	echo $(GREEN)Mandatory: Compilation done!$(RESET)
 
 clean:
-	@rm -f $(OBJ)
-	@echo $(RED)Object files removed$(RESET)
+	rm -f $(OBJ)
+	echo $(RED)Object files removed$(RESET)
 
 fclean: clean
-	@make fclean -C $(LIB_FT)
-	@make clean -C $(LIB_MINILIBX)
-	@rm -f $(NAME)
-	@echo $(RED)Executable file removed$(RESET)
+	make fclean -C $(LIB_FT)
+	make clean -C $(LIB_MINILIBX)
+	rm -f $(NAME)
+	echo $(RED)Executable file removed$(RESET)
 
 re: fclean all
 
