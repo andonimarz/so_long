@@ -6,7 +6,7 @@
 /*   By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/08 16:17:08 by amarzana          #+#    #+#             */
-/*   Updated: 2022/08/09 17:43:15 by amarzana         ###   ########.fr       */
+/*   Updated: 2022/08/17 11:27:32 by amarzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,12 @@ static void	ft_check_form(t_control *control)
 		i++;
 	}
 	if (i != control->height)
-			control->error = 2;
+		control->error = 2;
+	if (control->height == control->width)
+		control->error = 2;
 }
 
-static void	ft_check_elem(t_control *control, char c)
+static void	ft_check_elem(t_control *control, char c, int mode)
 {
 	char	**aux;
 	int		i;
@@ -70,10 +72,15 @@ static void	ft_check_elem(t_control *control, char c)
 	{
 		j = -1;
 		while (++j < control->width)
+		{
 			if (aux[i][j] == c)
-				flag = 1;
+				flag++;
+			if (aux[i][j] != '0' && aux[i][j] != '1' && aux[i][j] != 'P' &&
+			aux[i][j] != 'E' && aux[i][j] != 'C')
+				control->error = 4;
+		}
 	}
-	if (flag == 0)
+	if (flag == 0 || (mode == 1 && (flag > 1)))
 		control->error = 3;
 }
 
@@ -93,8 +100,14 @@ static void	ft_print_errors(t_control *control)
 	}
 	if (control->error == 3)
 	{
-		ft_putstr_fd("Error\nThe map must contain at least 1 exit,\
- 1 collectible, and 1 starting position.\n", 2);
+		ft_putstr_fd("Error\nThe map must contain 1 exit, 1 starting position and \
+at least 1 collectible.\n", 2);
+		ft_free(control->map);
+		exit(0);
+	}
+	if (control->error == 4)
+	{
+		ft_putstr_fd("Error\nInvalid char in map.\n", 2);
 		ft_free(control->map);
 		exit(0);
 	}
@@ -104,8 +117,8 @@ void	ft_checks(t_control *control)
 {
 	ft_check_perim(control);
 	ft_check_form(control);
-	ft_check_elem(control, 'P');
-	ft_check_elem(control, 'C');
-	ft_check_elem(control, 'E');
+	ft_check_elem(control, 'P', 1);
+	ft_check_elem(control, 'C', 0);
+	ft_check_elem(control, 'E', 1);
 	ft_print_errors(control);
 }

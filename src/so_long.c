@@ -6,13 +6,23 @@
 /*   By: amarzana <amarzana@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/05 11:31:53 by amarzana          #+#    #+#             */
-/*   Updated: 2022/08/09 19:39:14 by amarzana         ###   ########.fr       */
+/*   Updated: 2022/08/17 11:00:43 by amarzana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 #include <unistd.h>
 #include <fcntl.h>
+
+static int	ft_count_lines(t_control *control)
+{
+	int	i;
+
+	i = 0;
+	while (control->map[i])
+		i++;
+	return (i);
+}
 
 static char	*ft_get_map(t_control *control)
 {
@@ -47,27 +57,22 @@ int	main(int argc, char **argv)
 {
 	t_control	control;
 
-	ft_init_control(&control);
-	if (argc > 1)
+	if (argc == 2)
 	{
+		ft_init_control(&control);
+		ft_check_ber(argv[1]);
 		control.fd = open(argv[1], O_RDONLY);
-		if (control.fd < 0)
-		{
-			close(control.fd);
-			ft_putstr_fd("Error\n Invalid or missing input file\n", 2);
-			exit(0);
-		}
+		ft_check_file(control.fd);
+		control.fd = open(argv[1], O_RDONLY);
+		ft_check_fd(control.fd);
 		control.str = ft_get_map(&control);
 		control.map = ft_split(control.str, '\n');
 		free (control.str);
 		control.height = ft_count_lines(&control);
 		ft_checks(&control);
-/* 		control.i = -1;
-		while (control.map[++control.i])
-			printf("%s\n", control.map[control.i]);
-		printf("Error -> %d\n", control.error);
-		printf("Height -> %d\n", control.height);
-		printf("Width -> %d\n", control.width); */
-		ft_free(control.map);
+		ft_mlx(&control);
+		ft_exit(&control);
 	}
+	else
+		ft_putstr_fd("Error\nInvalid arg number.\n", 2);
 }
